@@ -8,8 +8,8 @@ var fs = require('fs');
 // Sets up the Express App
 // =============================================================
 var app = express();
-//var PORT = process.env.PORT || 3000;
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
+//var PORT = 3000;
 
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
@@ -23,23 +23,25 @@ app.use(bodyParser.json({type:'application/vnd.api+json'}));
 
 var tableArray = require('./app/data/table-data.js');
 
-	tableArray.push(
+/*	tableArray.push(
 		{	
 			name: "Phil",
 			phoneNumber: "222-555-5555",
 			email: "phil@email.com",
 			uniqueID: "222"
 		}
-	)
+	)*/
 
-console.log(tableArray);
+//console.log(tableArray);
+//console.log(tableArray.length)
+
 
 // Waiting List (DATA)
 // =============================================================
 
 var waitlistArray = require('./app/data/waitlist-data.js');
 //console.log(waitlistArray);
-
+//console.log(waitlistArray.length)
 
 // Routes
 // =============================================================
@@ -64,28 +66,57 @@ app.get('/tables', function(req, res){
 })
 
 
-// Create New Characters - takes in JSON input
-app.post('/api/new', function(req, res){
 
-	var newcharacter = req.body;
-	newcharacter.routeName = newcharacter.name.replace(/\s+/g, '').toLowerCase();
 
-	console.log(newcharacter);
 
-	characters.push(newcharacter);
 
-	res.json(newcharacter);
+app.get('/api/tables', function(req, res){
 
-	// Client Get Call http://localhost:3000/new?characterName=Steve&characterRole=Nothing+%2F+Dea…r+Engineer+%2F+Janitor&characterAge=29&characterPoints=199&routeName=steve
+	console.log(tableArray)
 
-	// req = http://localhost:3000/new?
-	// characterName=Steve
-	// characterRole=Nothing+%2F+Dea…r+Engineer+%2F+Janitor
-	// characterAge=29
-	// characterPoints=199
-	// routeName=steve
+	req.json(tableArray);
 
 })
+
+app.get('/api/waitlist', function(req, res){
+
+	console.log(waitlistArray)
+
+	req.json(waitlistArray);
+
+})
+
+
+// Create New Reservation - takes in JSON input
+app.post('/api/tables', function(req, res){
+
+	var newreservation = req.body;
+
+	console.log(newreservation);
+
+	tableArray.push(newreservation);
+	//console.log(tableArray);
+
+	res.json(true);
+
+})
+
+/*app.post('/api/waitlist', function(req, res){
+
+	var newreservation = req.body;
+
+	console.log(newreservation);
+
+	waitlistArray.push(newreservation);
+
+	res.json(newreservation);
+
+
+
+})
+*/
+
+
 
 // Starts the server to begin listening
 // =============================================================
