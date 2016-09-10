@@ -7,7 +7,8 @@ var path = require('path');
 // Sets up the Express App
 // =============================================================
 var app = express();
-var PORT = process.env.PORT || 3000;
+//var PORT = process.env.PORT || 3000;
+var PORT = 3000;
 
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
@@ -16,34 +17,17 @@ app.use(bodyParser.text());
 app.use(bodyParser.json({type:'application/vnd.api+json'}));
 
 
-// Star Wars Characters (DATA)
+// Table Reservations (DATA)
 // =============================================================
-var characters = [
+var tableArray = require('./app/data/table-data.js');
+//console.log(tableArray);
 
-	{
-		routeName: "yoda",
-		name: "Yoda",
-		role: "Jedi Master",
-		age: 900,
-		forcePoints: 2000
-	},
+// Waiting List (DATA)
+// =============================================================
 
-	{
-		routeName: "darthmaul",
-		name: "Darth Maul",
-		role: "Sith Lord",
-		age: 200,
-		forcePoints: 1200
-	},
+var waitlistArray = require('./app/data/waitlist-data.js');
+//console.log(waitlistArray);
 
-	{
-		routeName: "obiwankenobi",
-		name: "Obi Wan Kenobi",
-		role: "Jedi Master",
-		age: 55,
-		forcePoints: 1350
-	}
-]
 
 // Routes
 // =============================================================
@@ -51,28 +35,25 @@ var characters = [
 // Basic route that sends the user first to the AJAX Page
 app.get('/', function(req, res){
 
-	//res.send("Welcome to the Star Wars Page!")
+	//res.send("Welcome to the Home Page!")
+	res.sendFile(path.join(__dirname + '/index.html'));
+})
+
+app.get('/reserve', function(req, res){
+
+	//res.send("Welcome to the Add Reservation Page!")
+	res.sendFile(path.join(__dirname + '/reserve.html'));
+})
+
+app.get('/tables', function(req, res){
+
+	//res.send("Welcome to the View Tables Page!")
 	res.sendFile(path.join(__dirname + '/view.html'));
 })
 
-app.get('/add', function(req, res){
-
-	//res.send("Welcome to the Star Wars Page!")
-	res.sendFile(path.join(__dirname + '/add.html'));
-
-})
-
-app.get('/all', function(req, res){
-
-	//res.send("Welcome to the Star Wars Page!")
-	res.sendFile(path.join(__dirname + '/all.html'));
 
 
-
-
-})
-
-app.get('/api/:characters?', function(req, res){
+/*app.get('/api/:characters?', function(req, res){
 
 	var chosen = req.params.characters; //darthmaul
 
@@ -116,21 +97,8 @@ app.post('/api/new', function(req, res){
 	// characterPoints=199
 	// routeName=steve
 
-/*	var newCharacter = {
-		routeName: req.query.routeName,
-		name: req.query.characterName,
-		role: req.query.characterRole,
-		age: req.query.characterAge,
-		forcePoints: req.query.characterPoints
-	};
-
-	console.log(newCharacter);
-	characters.push(newCharacter)
-	console.log(characters);
-	res.json(newCharacter);*/
-
 })
-
+*/
 // Starts the server to begin listening
 // =============================================================
 app.listen(PORT, function(){

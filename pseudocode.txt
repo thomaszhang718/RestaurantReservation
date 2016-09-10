@@ -1,0 +1,24 @@
+pseudocode
+
+server.js
+home page of /
+2nd page of add reservation
+3rd page of view tables
+
+
+data folder
+table-data.js
+array of customer info
+
+module.exports
+
+
+in public folder
+admin-logic.js
+reserve-logic.js
+view-logic.js
+
+
+routing
+api-routes.js
+html-routes.js
