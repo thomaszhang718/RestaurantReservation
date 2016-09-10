@@ -3,6 +3,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
+var fs = require('fs');
 
 // Sets up the Express App
 // =============================================================
@@ -19,8 +20,19 @@ app.use(bodyParser.json({type:'application/vnd.api+json'}));
 
 // Table Reservations (DATA)
 // =============================================================
+
 var tableArray = require('./app/data/table-data.js');
-//console.log(tableArray);
+
+	tableArray.push(
+		{	
+			name: "Phil",
+			phoneNumber: "222-555-5555",
+			email: "phil@email.com",
+			uniqueID: "222"
+		}
+	)
+
+console.log(tableArray);
 
 // Waiting List (DATA)
 // =============================================================
@@ -52,30 +64,6 @@ app.get('/tables', function(req, res){
 })
 
 
-
-/*app.get('/api/:characters?', function(req, res){
-
-	var chosen = req.params.characters; //darthmaul
-
-	if(chosen){
-		console.log(chosen);
-
-		for (var i=0; i <characters.length; i++){
-
-			if (chosen == characters[i].routeName){
-				res.json(characters[i]);
-				return;
-			}
-		}
-
-		res.json(false);
-	}
-
-	else{
-		res.json(characters);
-	}
-})
-
 // Create New Characters - takes in JSON input
 app.post('/api/new', function(req, res){
 
@@ -98,7 +86,7 @@ app.post('/api/new', function(req, res){
 	// routeName=steve
 
 })
-*/
+
 // Starts the server to begin listening
 // =============================================================
 app.listen(PORT, function(){
